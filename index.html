@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>FitFlow Hydration Tracker</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>💧 FitFlow Hydration Tracker</h1>
+    <p class="subtitle">Stay hydrated and track your progress!</p>
+
+    <div class="stats">
+      <p><strong>Goal:</strong> <span id="goal">64</span> oz</p>
+      <p><strong>Streak:</strong> <span id="streak">0</span> days</p>
+    </div>
+
+    <div class="input-area">
+      <input id="waterInput" type="number" placeholder="Enter oz..." />
+      <button onclick="logWater()">Log Water</button>
+    </div>
+
+    <div class="progress-container">
+      <div class="progress-bar" id="progress-bar"></div>
+    </div>
+
+    <p id="total">0 oz tracked today</p>
+    <p id="message"></p>
+
+    <button class="reset-btn" onclick="resetDay()">Reset Day</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
