@@ -1,15 +1,35 @@
 let totalWater = 0;
-const goal = 64;
+let hydrationGoal = 64; // default
 
-window.onload = function() {
+window.onload = function () {
+  const goalSelect = document.getElementById("goalSelect");
+
+  // Load saved goal from localStorage (if any)
+  const savedGoal = localStorage.getItem("hydrationGoal");
+  if (savedGoal) {
+    hydrationGoal = parseInt(savedGoal);
+    goalSelect.value = savedGoal;
+  } else {
+    hydrationGoal = parseInt(goalSelect.value);
+  }
+
+  // Listen for dropdown change
+  goalSelect.addEventListener("change", function () {
+    hydrationGoal = parseInt(this.value);
+    localStorage.setItem("hydrationGoal", hydrationGoal);
+    updateUI();
+  });
+
+  // Load hydrationData from localStorage
   const stored = localStorage.getItem("hydrationData");
   if (stored) {
     const data = JSON.parse(stored);
     const today = new Date().toDateString();
+
     if (data.date === today) {
       totalWater = data.total;
     } else {
-      if (data.total >= goal) {
+      if (data.total >= hydrationGoal) {
         data.streak = (data.streak || 0) + 1;
       } else {
         data.streak = 0;
@@ -18,6 +38,7 @@ window.onload = function() {
       data.total = 0;
       data.date = today;
     }
+
     localStorage.setItem("hydrationData", JSON.stringify(data));
     updateUI(data.streak);
   } else {
@@ -33,9 +54,11 @@ function logWater() {
 
   if (!isNaN(amount) && amount > 0) {
     totalWater += amount;
+
     const data = JSON.parse(localStorage.getItem("hydrationData"));
     data.total = totalWater;
     localStorage.setItem("hydrationData", JSON.stringify(data));
+
     updateUI(data.streak);
     input.value = "";
     document.getElementById("message").innerText = "💧 Keep going!";
@@ -46,17 +69,29 @@ function logWater() {
 
 function updateUI(streak) {
   document.getElementById("total").innerText = `${totalWater} oz tracked today`;
-  const percent = Math.min((totalWater / goal) * 100, 100);
-  document.getElementById("progress-bar").style.width = percent + "%";
   document.getElementById("streak").innerText = streak || 0;
+
+  const percent = Math.min((totalWater / hydrationGoal) * 100, 100);
+  const fillElement = document.getElementById("bottle-fill");
+  fillElement.style.height = percent + "%";
+
+  // Hide old progress bar if still in DOM
+  const bar = document.getElementById("progress-bar");
+  if (bar) bar.style.width = "0%";
+
+  if (percent >= 100) {
+    document.getElementById("message").innerText = "🏆 Goal Reached! Stay hydrated!";
+  }
 }
 
 function resetDay() {
   totalWater = 0;
+
   const data = JSON.parse(localStorage.getItem("hydrationData"));
   data.total = 0;
   data.date = new Date().toDateString();
   localStorage.setItem("hydrationData", JSON.stringify(data));
+
   updateUI(data.streak);
   document.getElementById("message").innerText = "Day reset!";
 }
