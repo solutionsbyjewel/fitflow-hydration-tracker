@@ -26,11 +26,20 @@
 </div>
 
 <!-- Water Bottle Visual -->
-<div class="bottle-container">
-  <div class="bottle-outline">
-    <div id="bottle-fill"></div>
-  </div>
+<div class="bottle-container" style="position: relative; width: 100px; height: 300px; margin: 1.5em auto;">
+  <img src="assets/bottle.png" alt="Water Bottle" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2;" />
+  <div id="bottle-fill" style="
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 0%;
+    background-color: rgba(0, 188, 212, 0.7);
+    z-index: 1;
+    border-radius: 0 0 15px 15px;
+    transition: height 1s ease-in-out;
+  "></div>
 </div>
+
 
     <p id="total">0 oz tracked today</p>
     <p id="message"></p>
