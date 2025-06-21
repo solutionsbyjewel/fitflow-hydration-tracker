@@ -10,19 +10,27 @@
     <h1>💧 FitFlow Hydration Tracker</h1>
     <p class="subtitle">Stay hydrated and track your progress!</p>
 
-    <div class="stats">
-      <p><strong>Goal:</strong> <span id="goal">64</span> oz</p>
-      <p><strong>Streak:</strong> <span id="streak">0</span> days</p>
-    </div>
-
     <div class="input-area">
       <input id="waterInput" type="number" placeholder="Enter oz..." />
       <button onclick="logWater()">Log Water</button>
     </div>
+<div class="stats">
+  <label for="goalSelect"><strong>Goal:</strong></label>
+  <select id="goalSelect">
+    <option value="16">16 oz</option>
+    <option value="64" selected>64 oz (Half Gallon)</option>
+    <option value="128">128 oz (1 Gallon)</option>
+    <option value="2000">2 Liters</option>
+  </select>
+  <p><strong>Streak:</strong> <span id="streak">0</span> days</p>
+</div>
 
-    <div class="progress-container">
-      <div class="progress-bar" id="progress-bar"></div>
-    </div>
+<!-- Water Bottle Visual -->
+<div class="bottle-container">
+  <div class="bottle-outline">
+    <div id="bottle-fill"></div>
+  </div>
+</div>
 
     <p id="total">0 oz tracked today</p>
     <p id="message"></p>
@@ -31,6 +39,5 @@
   </div>
 
   <script src="script.js"></script>
-  <img src="assets/bottle.jpg" alt="Water Bottle" style="width: 150px; height: auto;" />
 </body>
 </html>
