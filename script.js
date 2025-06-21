@@ -84,13 +84,27 @@ function updateUI(streak) {
   }
 }
 
-function resetDay() {
-  totalWater = 0;
+function resetEverything() {
+  const confirmReset = confirm("⚠️ This will erase all your progress and start over. Are you sure?");
+  
+  if (confirmReset) {
+    localStorage.removeItem('hydrationData');
+    localStorage.removeItem('hydrationGoal');
+    totalWater = 0;
+    hydrationGoal = 64; // Default
 
-  const data = JSON.parse(localStorage.getItem("hydrationData"));
-  data.total = 0;
-  data.date = new Date().toDateString();
-  localStorage.setItem("hydrationData", JSON.stringify(data));
+    // Reset dropdown if it exists
+    const goalSelect = document.getElementById("goalSelect");
+    if (goalSelect) {
+      goalSelect.value = "64";
+    }
+
+    updateUI(0);
+    document.getElementById("message").innerText = "💥 All data has been reset!";
+  } else {
+    document.getElementById("message").innerText = "Reset canceled.";
+  }
+}
 
   updateUI(data.streak);
   document.getElementById("message").innerText = "Day reset!";
